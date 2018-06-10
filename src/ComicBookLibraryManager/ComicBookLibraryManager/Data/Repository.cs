@@ -19,7 +19,7 @@ namespace ComicBookLibraryManager.Data
         static Context GetContext()
         {
             var context = new Context();
-            context.Database.Log = (message) => Debug.WriteLine(message);
+           // context.Database.Log = (message) => Debug.WriteLine(message);
             return context;
         }
 
@@ -135,25 +135,16 @@ namespace ComicBookLibraryManager.Data
         {
             using (Context context = GetContext())
             {
+                comicBook.Series = new Series()
+                {
+                    Id = 3,
+                    Title = "Bone"
+                };
+
                 context.ComicBooks.Add(comicBook);
 
-                if (comicBook.Series != null && comicBook.Series.Id > 0)
-                {
-                    context.Entry(comicBook.Series).State = EntityState.Unchanged;
-                }
-
-                foreach (ComicBookArtist artist in comicBook.Artists)
-                {
-                    if (artist.Artist != null && artist.Artist.Id > 0)
-                    {
-                        context.Entry(artist.Artist).State = EntityState.Unchanged;
-                    }
-
-                    if (artist.Role != null && artist.Role.Id > 0)
-                    {
-                        context.Entry(artist.Role).State = EntityState.Unchanged;
-                    }
-                }
+                var comicBookEntry = context.Entry(comicBook);
+                var seriesEntry = context.Entry(comicBook.Series);
 
                 context.SaveChanges();
             }
