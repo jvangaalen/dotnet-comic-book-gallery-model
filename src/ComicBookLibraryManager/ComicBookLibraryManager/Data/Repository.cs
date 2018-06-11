@@ -135,16 +135,17 @@ namespace ComicBookLibraryManager.Data
         {
             using (Context context = GetContext())
             {
-                comicBook.Series = new Series()
-                {
-                    Id = 3,
-                    Title = "Bone"
-                };
+                
 
                 context.ComicBooks.Add(comicBook);
 
                 var comicBookEntry = context.Entry(comicBook);
                 var seriesEntry = context.Entry(comicBook.Series);
+
+                if (comicBook.Series != null && comicBook.Series.Id > 0)
+                {
+                    context.Entry(comicBook.Series).State = EntityState.Unchanged;
+                }
 
                 context.SaveChanges();
             }

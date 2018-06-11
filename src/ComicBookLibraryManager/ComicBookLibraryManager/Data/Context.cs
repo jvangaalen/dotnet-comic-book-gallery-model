@@ -1,6 +1,7 @@
 ﻿using ComicBookLibraryManager.Models;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Data.SqlClient;
 
 namespace ComicBookLibraryManager.Data
 {
